@@ -6,11 +6,33 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
-    "morgan": "~1.9.1"
-  }
+    "mongodb": "^5.3.0",
+    "mongoose": "^7.1.0",
+    "morgan": "~1.9.1",
+    "pug": "^3.0.2",
+    "validator": "^13.9.0"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LamaNafei/Vali-Master-Admin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LamaNafei/Vali-Master-Admin/issues"
+  },
+  "homepage": "https://github.com/LamaNafei/Vali-Master-Admin#readme",
+  "description": ""
 }
