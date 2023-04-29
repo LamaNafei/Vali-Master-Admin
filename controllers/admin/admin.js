@@ -1,9 +1,18 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const model = require('../../services/user');
+const Admin = require('../../db/adminSchema')
 
 async function logInController(res, req){
   if(req.method == 'POST'){
+    let newAdmin = new Admin({
+      adminID: 1,
+      userName: "LomaNafei",         
+  email: "lomanafei@gmail.com",
+  password: "12345789",
+  status: 1 
+  });
+  newAdmin.save();
     const sanitizedEmail = validator.escape(req.body.email);
     const sanitizedPassword = validator.escape(req.body.password);
     try {
