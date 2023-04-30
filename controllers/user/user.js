@@ -21,7 +21,7 @@ async function logInController(res, req){
         return res.json({"message": 'Inactive user'})
       }
       req.session.userID = user.userID;
-      const payload = { "message": 'sign in successfully',
+      var payload = { "message": 'sign in successfully',
                         "userId": user.userID,
                         "userName": user.userName,
                         "userEmail": user.email,
@@ -31,7 +31,7 @@ async function logInController(res, req){
                         "status": user.statues,
                         "gender": user.gender,
                       }
-      var token = jwt.sign(payload, process.env.MY_SECRET_KEY,)    
+      var token = jwt.sign(payload, process.env.MY_SECRET_KEY)    
       return res.json(token);
   } 
     catch (error) {
