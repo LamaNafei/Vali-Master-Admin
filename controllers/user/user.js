@@ -60,6 +60,7 @@ async function registerController(res, req){
         password: bcrypt.hash(req.body.password, 10),
     });
     newAdmin.save();
+    return res.json({"message": "registrant successfully"})
   }
   else{
     return res.json({"message": "enter your data to registers"})
