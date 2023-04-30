@@ -59,7 +59,7 @@ async function registerController(res, req){
         userName: req.body.userName,
         password: bcrypt.hash(req.body.password, 10),
     });
-    newAdmin.save();
+    newUser.save();
     return res.json({"message": "registrant successfully"})
   }
   else{
