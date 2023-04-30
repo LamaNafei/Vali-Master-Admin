@@ -15,5 +15,13 @@ router.post('/login', function (req, res){
 router.get('/login', isAuthenticated.login,function (req, res){
   return userController.userLogin(res, req)
 });
+
+router.post('/register', function (req, res){
+  return userController.register(res, req)
+});
+
+router.get('/register', isAuthenticated.login,function (req, res){
+  return userController.register(res, req)
+});
   
 module.exports = router;

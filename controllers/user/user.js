@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const model = require('../../services/user')
+const User = require('../../db/userSchema')
 
 async function logInController(res, req){
   if(req.method == "POST"){
@@ -14,14 +15,21 @@ async function logInController(res, req){
       const isMatch = await bcrypt.compare(sanitizedPassword, user.password);
       if (!isMatch) {
         return res.json({"message": 'Invalid password'})
-
+      }
+      if(user.statues == 2){
+        return res.json({"message": 'Inactive user'})
       }
       req.session.userID = user.userID;
-      req.session.userType = user.userType;
     
       return res.json({ "message": 'sign in successfully',
                         "userId": user.userID,
+                        "userName": user.userName,
                         "userEmail": user.email,
+                        "userFirstName": user.firstName,
+                        "userLastName": user.lastName,
+                        "mobileNo": user.mobileNo,
+                        "status": user.statues,
+                        "gender": user.gender,
                       });
   } 
     catch (error) {
@@ -40,7 +48,25 @@ function dashboardController(res, req){
   "userEmail": user.email,
 });
 }
+
+async function registerController(res, req){
+    if(req.method == "POST"){
+      let newUser = await new User({
+        userID: 2,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        userName: req.body.userName,
+        password: bcrypt.hash(req.body.password, 10),
+    });
+    newAdmin.save();
+  }
+  else{
+    return res.json({"message": "enter your data to registers"})
+  }
+}
 module.exports = {
   userLogin: logInController,
-  userDashboard: dashboardController
+  userDashboard: dashboardController,
+  register: registerController,
 }
