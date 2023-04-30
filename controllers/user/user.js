@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 const model = require('../../services/user')
 const User = require('../../db/userSchema')
+const jwt = require("jsonwebtoken")
 
 async function logInController(res, req){
   if(req.method == "POST"){
@@ -20,8 +21,7 @@ async function logInController(res, req){
         return res.json({"message": 'Inactive user'})
       }
       req.session.userID = user.userID;
-    
-      return res.json({ "message": 'sign in successfully',
+      const payload = { "message": 'sign in successfully',
                         "userId": user.userID,
                         "userName": user.userName,
                         "userEmail": user.email,
@@ -30,7 +30,9 @@ async function logInController(res, req){
                         "mobileNo": user.mobileNo,
                         "status": user.statues,
                         "gender": user.gender,
-                      });
+                      }
+      token = jwt.sign(payload, process.env.MY_SECRET_KEY,)    
+      return res.json(token);
   } 
     catch (error) {
       return res.status(500).json({ message: 'Server error' });
