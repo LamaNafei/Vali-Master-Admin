@@ -42,16 +42,16 @@ async function logInController(res, req){
 }
 
 function dashboardController(res, req){
-  user = search(req.session.userID)
+  const user = search(req.session.userID)
   return res.json({ "message": 'sign in successfully',
   "userId": user.userID,
   "userEmail": user.email,
 });
 }
 
-async function registerController(res, req){
+function registerController(res, req){
     if(req.method == "POST"){
-      let newUser = await new User({
+      let newUser = new User({
         userID: 2,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
