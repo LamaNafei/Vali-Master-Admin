@@ -40,6 +40,8 @@ async function logInController(res, req){
   }
   else {
     res.json({ "message": "you are not sign in"});
+    // return res.render(__dirname + "/../../views/auth/page-login.pug", {message: ''});
+
   }
 }
 
@@ -81,16 +83,22 @@ async function registerController(res, req){
 }
 
 async function newPasswordController(res, req){
-  const sanitizedNewPassword = validator.escape(req.body.new);
-  const sanitizedOldPassword = validator.escape(req.body.old);
-  const user = model.idSearch(req.session.userID)
-  const isMatch = await bcrypt.compare(sanitizedOldPassword, user.password);
-  if(!isMatch){
-    return res.json({"message": "the old password you add is incorrect!!"})
+  if(req.method == "POST"){
+    const sanitizedNewPassword = validator.escape(req.body.new);
+    const sanitizedOldPassword = validator.escape(req.body.old);
+    const user = model.idSearch(req.session.userID)
+    console.log(user.password);
+    const isMatch = await bcrypt.compare(sanitizedOldPassword, user.password);
+    if(!isMatch){
+      return res.json({"message": "the old password you add is incorrect!!"})
+    }
+    model.updatePassword(user.userID, sanitizedNewPassword)
+    return res.json({"message": "the password update successfully"})
   }
-  model.updatePassword(user.userID, sanitizedNewPassword)
-  return res.json({"message": "the password update successfully"})
+  // else{
+    // return res.render(__dirname + "/../../views/auth/page-newPassword.pug", {message: ''});
 
+  // }
 }
 module.exports = {
   userLogin: logInController,

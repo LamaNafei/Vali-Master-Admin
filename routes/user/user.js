@@ -27,5 +27,8 @@ router.get('/register', isAuthenticated.login,function (req, res){
 router.post('/newPassword', isAuthenticated.dashboard, function (req, res){
   return userController.updatePassword(res, req)
 });
+router.get('/newPassword', isAuthenticated.dashboard, function (req, res){
+  return userController.updatePassword(res, req)
+});
   
 module.exports = router;

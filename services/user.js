@@ -9,6 +9,7 @@ function searchByUserName(user){
 }
 
 function searchByUserID(user){
+    console.log(User.findOne({userId: user}));
     return User.findOne({userId: user});
 }
 
