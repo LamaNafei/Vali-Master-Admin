@@ -1,5 +1,5 @@
 function isAuthenticatedDashboard(req, res, next) {
-  if(req.session){
+  if(req.session.userID){
     return next();
     }
   else {
@@ -8,11 +8,11 @@ function isAuthenticatedDashboard(req, res, next) {
 }
 
 function isAuthenticatedLogin(req, res, next) {
-  if(req.session){
-    res.redirect('\dashboard');
+  if(!req.session.userID){
+    return next();
     }
   else {
-    return next();
+    res.redirect('\dashboard');
     }
 }
 

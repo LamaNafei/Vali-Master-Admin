@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 const flash = require('connect-flash');
+require('dotenv').config();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,19 +22,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
-
-app.use(flash());
-app.use('/', indexRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 app.use(session({
-  secret: 'your-secret-key',
+  secret: process.env.MY_SECRETE_KEY,
   resave: false,
   saveUninitialized: false
 }));
+app.use(flash());
+app.use('/', indexRouter);
+
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

@@ -62,7 +62,10 @@ block content
 				h3.tile-title Support Requests
 				.embed-responsive.embed-responsive-16by9
 					canvas.embed-responsive-item(id="pieChartDemo") 
-
+	script.
+		window.onload = function() {
+			alert("Welcome to Vali");
+		}
 block specific-js
 	script(type='text/javascript', src="/assets/javascripts/plugins/chart.js")
 	script(type='text/javascript').
@@ -111,3 +114,4 @@ block specific-js
 
 		var ctxp = $("#pieChartDemo").get(0).getContext("2d");
 		var pieChart = new Chart(ctxp).Pie(pdata);
+		

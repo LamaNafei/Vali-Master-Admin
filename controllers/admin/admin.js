@@ -1,24 +1,16 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const model = require('../../services/user');
-const Admin = require('../../db/adminSchema')
+const model = require('../../services/admin');
 
 async function logInController(res, req){
   if(req.method == 'POST'){
-    let newAdmin = new Admin({
-      adminID: 1,
-      userName: "LomaNafei",         
-  email: "lomanafei@gmail.com",
-  password: "12345789",
-  status: 1 
-  });
-  newAdmin.save();
+ 
     const sanitizedEmail = validator.escape(req.body.email);
     const sanitizedPassword = validator.escape(req.body.password);
     try {
       const user = await model.search(sanitizedEmail);
+      console.log(user);
       if (!user) {
-        
           return res.render('\auth/page-login', {message: 'Email Not Found'})
       }
       const isMatch = await bcrypt.compare(sanitizedPassword, user.password);
@@ -26,8 +18,7 @@ async function logInController(res, req){
         return res.render('\auth/page-login', {message: 'Invalid password'})
 
       }
-      req.session.userID = user.userID;
-      req.session.userType = user.userType;
+      req.session.adminID = user.adminID;
       
       return res.redirect('\dashboard')
     }
@@ -36,7 +27,6 @@ async function logInController(res, req){
     }
   }
   else{
-    console.log("HI")
     return res.render(__dirname + "/../../views/auth/page-login.pug", {message: ''});
 }
 }

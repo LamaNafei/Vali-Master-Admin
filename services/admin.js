@@ -1,4 +1,4 @@
-const Admin = require('../db/AdminSchema');
+const Admin = require('../db/adminSchema');
 
 function Search(admin){
     return Admin.findOne({email: admin });

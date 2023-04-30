@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const isAuthenticated = require('../../middleware/authentication_function');
+const isAuthenticated = require('../../middleware/user/authentication_function');
 userController = require('../../controllers/user/user')
 
 router.get('/dashboard', isAuthenticated.dashboard, function(req, res) {
