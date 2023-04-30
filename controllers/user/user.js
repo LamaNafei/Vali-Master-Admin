@@ -49,17 +49,17 @@ function dashboardController(res, req){
 });
 }
 
-function registerController(res, req){
+async function registerController(res, req){
     if(req.method == "POST"){
       let newUser = new User({
         userID: 2,
-        firstName: req.body.firstName,
+        firstName:  req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         userName: req.body.userName,
         password: bcrypt.hash(req.body.password, 10),
     });
-    newUser.save();
+    await newUser.save();
     return res.json({"message": "registrant successfully"})
   }
   else{
