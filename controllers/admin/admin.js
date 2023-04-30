@@ -32,11 +32,6 @@ async function logInController(res, req){
 }
 
 function dashboardController(res, req){
-  const search = req.body.search;
-  req.session.search = search;
-    if (search){
-      return res.redirect('\search');
-    }
   return res.render(__dirname + "/../../views/dashboard.pug");
 }
 
@@ -46,9 +41,17 @@ function logoutController(res, req){
 }
 
 function searchController(res, req){  
-  user = userSearch.searchBar(req.session.search)
-  if (!user.userID){
+  userEmail = userSearch.emailSearch(req.body.search)
+  userName = userSearch.userNameSearch(req.body.search)
+  console.log(userEmail, userName)
+  if (!userEmail.userID && !userName.userID){
     user = 'cannot find user'
+  }
+  else if(userEmail){
+    user = userName
+  }
+  else{
+    user = userEmail
   }
   req.session.search = undefined
   return res.render(__dirname + "/../../views/search.pug", {user: user})

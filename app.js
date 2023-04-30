@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
   secret: process.env.MY_SECRETE_KEY,
-  resave: true,
+  resave: false,
   saveUninitialized: true
 }));
 app.use(flash());
