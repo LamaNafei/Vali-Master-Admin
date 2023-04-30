@@ -1,15 +1,24 @@
 const User = require('../db/userSchema');
 
-function Search(user){
-    return User.findOne({email: user });
+function searchByEmail(user){
+    return User.findOne({email: user});
 }
 
-function searchBar(user){
-    console.log(User.findOne({userName: user}))
-    return User.findOne({email: user}) ? User.findOne({email: user}) : User.findOne({userName: user});
+function searchByUserName(user){
+    return User.findOne({userName: user});
+}
+
+function searchByUserID(user){
+    return User.findOne({userId: user});
+}
+
+function updatePassword(user, password){
+    return User.updateOne({userID: user},{password: password });
 }
 
 module.exports = {
-    search: Search,
-    searchBar: searchBar,
+    emailSearch: searchByEmail,
+    userNameSearch: searchByUserName,
+    idSearch: searchByUserID,
+    updatePassword: updatePassword,
 }

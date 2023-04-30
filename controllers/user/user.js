@@ -8,7 +8,7 @@ async function logInController(res, req){
     const sanitizedEmail = validator.escape(req.body.email);
     const sanitizedPassword = validator.escape(req.body.password);
     try {
-      const user = await model.search(sanitizedEmail);
+      const user = await model.emailSearch(sanitizedEmail);
       if (!user) {
           return res.json({"message": 'Email Not Found'})
       }
@@ -42,7 +42,7 @@ async function logInController(res, req){
 }
 
 function dashboardController(res, req){
-  const user = search(req.session.userID)
+  const user = model.idSearch(req.session.userID)
   return res.json({ "message": 'sign in successfully',
   "userId": user.userID,
   "userEmail": user.email,
@@ -57,7 +57,7 @@ async function registerController(res, req){
       const sanitizedLastName = validator.escape(req.body.lastName);
       const sanitizedUserName = validator.escape(req.body.userName);
 
-      const user = await model.search(sanitizedEmail);
+      const user = await model.emailSearch(sanitizedEmail);
       if(user){
         return res.json({"message": "email is already has user"})
       }
@@ -77,8 +77,22 @@ async function registerController(res, req){
     return res.json({"message": "enter your data to registers"})
   }
 }
+
+async function newPasswordController(res, req){
+  const sanitizedNewPassword = validator.escape(req.body.new);
+  const sanitizedOldPassword = validator.escape(req.body.old);
+  const user = model.idSearch(req.session.userID)
+  const isMatch = await bcrypt.compare(sanitizedOldPassword, user.password);
+  if(!isMatch){
+    return res.json({"message": "the old password you add is incorrect!!"})
+  }
+  model.updatePassword(user.userID, sanitizedNewPassword)
+  return res.json({"message": "the password update successfully"})
+
+}
 module.exports = {
   userLogin: logInController,
   userDashboard: dashboardController,
   register: registerController,
+  updatePassword: newPasswordController,
 }
