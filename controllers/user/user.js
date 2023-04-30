@@ -51,17 +51,23 @@ function dashboardController(res, req){
 
 async function registerController(res, req){
     if(req.method == "POST"){
+      const sanitizedEmail = validator.escape(req.body.email);
+      const sanitizedPassword = validator.escape(req.body.password);
+      const sanitizedFirstName = validator.escape(req.body.firstName);
+      const sanitizedLastName = validator.escape(req.body.lastName);
+      const sanitizedUserName = validator.escape(req.body.userName);
+
       const user = await model.search(sanitizedEmail);
       if(user){
         return res.json({"message": "email is already has user"})
       }
-      password = await bcrypt.hash(req.body.password, 10);
+      password = await bcrypt.hash(sanitizedPassword, 10);
       let newUser = new User({
         userID: 2,
-        firstName:  req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        userName: req.body.userName,
+        firstName:  sanitizedFirstName,
+        lastName: sanitizedLastName,
+        email: sanitizedEmail,
+        userName: sanitizedUserName,
         password: password
     });
     await newUser.save();
