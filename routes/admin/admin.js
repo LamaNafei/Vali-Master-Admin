@@ -24,7 +24,7 @@ router.get('/search', isAuthenticated.dashboard, function(req, res) {
   return adminController.adminSearch(res, req)
 });
 
-router.post('/search', isAuthenticated.dashboard, function(req, res) {
+router.post('/search', function(req, res) {
   return adminController.adminSearch(res, req)
 });
 
