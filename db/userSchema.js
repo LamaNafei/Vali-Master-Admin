@@ -27,16 +27,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  statues: {
-    type: Number,
-    required: true,
-  },            //1 means active        2 means inactive
+  statues: Number,         //1 means active        2 means inactive
   profileImage: String,
   mobileNo: String,
-  gender: {
-    type: Number,
-    required: true,
-  },           //1 means male        2 means female
+  gender: Number,         //1 means male        2 means female
 });
 
 const User = mongoose.model('User', userSchema);
