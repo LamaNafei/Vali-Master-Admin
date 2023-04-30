@@ -1,4 +1,4 @@
-const Admin = require('../db/adminSchema');
+const Admin = require('../db/AdminSchema');
 
 function Search(admin){
     return Admin.findOne({email: admin });
@@ -6,5 +6,4 @@ function Search(admin){
 
 module.exports = {
     search: Search,
-    
 }

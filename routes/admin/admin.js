@@ -15,5 +15,17 @@ router.get('/login', isAuthenticated.login, function(req, res) {
 router.post('/login', function (req, res){
   return adminController.adminLogin(res, req)
 });
-  
+
+router.get('/logout', isAuthenticated.dashboard, function(req, res) {
+  return adminController.adminLogout(res, req)
+});
+
+router.get('/search', isAuthenticated.dashboard, function(req, res) {
+  return adminController.adminSearch(res, req)
+});
+
+router.post('/search', isAuthenticated.dashboard, function(req, res) {
+  return adminController.adminSearch(res, req)
+});
+
   module.exports = router;
