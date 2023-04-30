@@ -31,7 +31,7 @@ async function logInController(res, req){
                         "status": user.statues,
                         "gender": user.gender,
                       }
-      token = jwt.sign(payload, process.env.MY_SECRET_KEY,)    
+      var token = jwt.sign(payload, process.env.MY_SECRET_KEY,)    
       return res.json(token);
   } 
     catch (error) {
